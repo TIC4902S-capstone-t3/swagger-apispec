@@ -1,6 +1,6 @@
 openapi: "3.0.0"
 info:
-  title: TIC4902S (Team 3) - apiserver endpoints
+  title: TIC4902S (Team 3) - API endpoints
   version: "1.0.0"
   description: API specifications for 'Talents Meet Opportunities'
 
