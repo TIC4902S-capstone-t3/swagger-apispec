@@ -1,0 +1,94 @@
+openapi: "3.0.0"
+info:
+  title: TIC4902S (Team 3) - apiserver endpoints
+  version: "1.0.0"
+  description: API specifications for 'Talents Meet Opportunities'
+
+servers:
+  - url: "https://<hostname>:9001"
+
+paths:
+  /api/authenticate:
+    post:
+      tags:
+        - APIServer endpoints
+      summary: Login user to the system
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+        "401":
+          description: Login failed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FailedLoginResponse"
+
+components:
+  schemas:
+    LoginRequest:
+      type: object
+      required:
+        - userId
+        - password
+      properties:
+        userId:
+          type: string
+          description: registered user
+        password:
+          type: string
+          description: password for login account
+      example:
+        userId: 'admin1'
+        password: 'secretpassword'
+
+    LoginResponse:
+      type: object
+      required:
+        - status
+        - userId
+        - sessionId
+        - jwtToken
+      properties:
+        status:
+          type: integer
+          description: status code for 200
+        userId:
+          type: string
+          description: registered user
+        sessionId:
+          type: string
+          description: sessionId for current login user
+        jwtToken:
+          type: string
+          description: JWT Token for further actions
+      example:
+        status: 0
+        userId: 'admin1'
+        sessionId: ''
+        jwtToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9'
+
+    FailedLoginResponse:
+      type: object
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: integer
+          description: status code for 401
+        message:
+          type: string
+          description: respective error message
+      example:
+        status: 1
+        message: 'login failed'
